@@ -50,6 +50,35 @@ document.getElementById("calculateA").addEventListener("click", function () {
     `;
 });
 
+document.getElementById("calculateB").addEventListener("click", function () {
+    const count = parseInt(document.getElementById("circleCount").value);
+    const circles = [];
+    for (let i = 0; i < count; i++) {
+        const x = parseFloat(document.getElementById(x${i}).value);
+        const y = parseFloat(document.getElementById(y${i}).value);
+        const r = parseFloat(document.getElementById(r${i}).value);
+        circles.push({ x, y, r });
+    }
+
+    let separateCircles = [];
+    for (let i = 0; i < count; i++) {
+        let isSeparate = true;
+        for (let j = 0; j < count; j++) {
+            if (i !== j && (doCirclesIntersect(circles[i], circles[j]) || isCircleInside(circles[i], circles[j]))) {
+                isSeparate = false;
+            }
+        }
+        if (isSeparate) {
+            separateCircles.push(Aylana ${i + 1});
+        }
+    }
+
+    const results = document.getElementById("results");
+    results.innerHTML = `
+        <p>Alohida turgan aylanalar: <b>${separateCircles.length > 0 ? separateCircles.join(", ") : "Yo'q"}</b></p>
+    `;
+});
+
 function doCirclesIntersect(circle1, circle2) {
     const distance = Math.sqrt(
         Math.pow(circle1.x - circle2.x, 2) + Math.pow(circle1.y - circle2.y, 2)
